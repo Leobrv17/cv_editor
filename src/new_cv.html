@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire Complet</title>
+    <script>
+        function ajouterChamp(divId) {
+            var divContainer = document.getElementById(divId);
+            var newField = divContainer.getElementsByTagName('div')[0].cloneNode(true);
+            var inputFields = newField.getElementsByTagName('input');
+            for (var i = 0; i < inputFields.length; i++) {
+                inputFields[i].value = '';
+            }
+            divContainer.appendChild(newField);
+        }
+    </script>
+</head>
+<body>
+<form action="submit.php" method="post" enctype="multipart/form-data">
+    <h3>Profil</h3>
+    <label for="firstName">Prénom:</label><br>
+    <input type="text" id="firstName" name="firstName" required><br>
+
+    <label for="lastName">Nom:</label><br>
+    <input type="text" id="lastName" name="lastName" required><br>
+
+    <label for="image">Image:</label><br>
+    <input type="file" id="image" name="image"><br>
+
+    <label for="birthday">Date de naissance:</label><br>
+    <input type="date" id="birthday" name="birthday"><br>
+
+    <label for="phoneNumb">Numéro de téléphone:</label><br>
+    <input type="text" id="phoneNumb" name="phoneNumb"><br>
+
+    <label for="city">Ville:</label><br>
+    <input type="text" id="city" name="city"><br>
+
+    <label for="country">Pays:</label><br>
+    <input type="text" id="country" name="country" required><br>
+
+    <label for="permis">Permis:</label><br>
+    <input type="text" id="permis" name="permis"><br>
+
+    <label for="description">Description:</label><br>
+    <textarea id="description" name="description"></textarea><br>
+
+    <h3>Expérience</h3>
+    <div id="experiences">
+        <div>
+            <label for="expName[]">Nom de l'expérience:</label><br>
+            <input type="text" name="expName[]" required><br>
+
+            <label for="jobPosition[]">Position:</label><br>
+            <input type="text" name="jobPosition[]"><br>
+
+            <label for="expStart[]">Début:</label><br>
+            <input type="date" name="expStart[]"><br>
+
+            <label for="expEnd[]">Fin:</label><br>
+            <input type="date" name="expEnd[]"><br>
+
+            <label for="localisation[]">Localisation:</label><br>
+            <input type="text" name="localisation[]"><br>
+
+            <label for="expDescription[]">Description de l'expérience:</label><br>
+            <textarea name="expDescription[]"></textarea><br>
+
+            <button type="button" onclick="ajouterChamp('experiences')">Ajouter une autre expérience</button>
+        </div>
+    </div>
+
+    <h3>Compétences</h3>
+    <div id="skills">
+        <div>
+            <label for="skillName[]">Nom de la compétence:</label><br>
+            <input type="text" name="skillName[]" required><br>
+
+            <label for="skillDescription[]">Description de la compétence:</label><br>
+            <textarea name="skillDescription[]"></textarea><br>
+
+            <button type="button" onclick="ajouterChamp('skills')">Ajouter une autre compétence</button>
+        </div>
+    </div>
+
+    <h3>Certifications</h3>
+    <div id="certifications">
+        <div>
+            <label for="certName[]">Nom de la certification:</label><br>
+            <input type="text" name="certName[]" required><br>
+
+            <label for="certDate[]">Date:</label><br>
+            <input type="date" name="certDate[]"><br>
+
+            <label for="certDescription[]">Description de la certification:</label><br>
+            <textarea name="certDescription[]"></textarea><br>
+
+            <button type="button" onclick="ajouterChamp('certifications')">Ajouter une autre certification</button>
+        </div>
+    </div>
+
+    <input type="submit" value="Soumettre">
+</form>
+</body>
+</html>
