@@ -72,6 +72,7 @@ try {
     echo "Erreur de base de données: " . $e->getMessage();
 }
 ?>
-<a href="generate_pdf.php?userId=<?php echo $userId; ?>">Télécharger le CV en PDF</a>
+<a href="generate_pdf.php"<?php echo $userId; ?>">Télécharger le CV en PDF</a>
+<iframe src="/cv_pdf"></iframe>
 </body>
 </html>

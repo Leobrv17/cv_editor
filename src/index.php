@@ -11,6 +11,9 @@ switch ($route) {
     case '/read_cv':
         require 'cv_details.php';
         break;
+    case '/cv_pdf':
+        require 'generate_pdf.php';
+        break;
     default:
         require '404.php';
         break;
