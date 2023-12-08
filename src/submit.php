@@ -16,23 +16,11 @@ $options = [
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 
-    $uploadDir = 'uploads/';
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0755, true);
-    }
-    $imagePath = '';
-    if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
-        $tmpName = $_FILES['image']['tmp_name'];
-        $imagePath = $uploadDir . basename($_FILES['image']['name']);
-        move_uploaded_file($tmpName, $imagePath);
-    }
-
     // Insertion dans la table profil
-    $stmt = $pdo->prepare("INSERT INTO profil (FirstName, LastName, Image, Birthday, PhoneNumb, City, Country, Permis, Description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO profil (FirstName, LastName, Birthday, PhoneNumb, City, Country, Permis, Description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([
         $_POST['firstName'],
         $_POST['lastName'],
-        $imagePath,
         $_POST['birthday'],
         $_POST['phoneNumb'],
         $_POST['city'],

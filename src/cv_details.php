@@ -7,7 +7,7 @@
 <body>
 <h1>Détails du CV</h1>
 <?php
-$host = 'db';  // Le nom du service MySQL dans Docker
+$host = 'db';
 $db = 'cvdb';
 $user = 'root';
 $pass = 'rootpassword';
@@ -26,24 +26,19 @@ try {
     if (isset($_GET['userId']) && is_numeric($_GET['userId'])) {
         $userId = $_GET['userId'];
 
-        // Récupérer les informations de profil
         $stmt = $pdo->prepare("SELECT * FROM profil WHERE UserId = ?");
         $stmt->execute([$userId]);
         $profil = $stmt->fetch();
 
-        // Afficher les informations de profil
+
         echo "<h2>Profil de " . htmlspecialchars($profil['FirstName']) . " " . htmlspecialchars($profil['LastName']) . "</h2>";
         echo "<p>ID: " . htmlspecialchars($profil['UserId']) . "</p>";
-        echo "<p>Image: <img src='" . htmlspecialchars($profil['Image']) . "' alt='Profil Image'></p>";
         echo "<p>Date de naissance: " . htmlspecialchars($profil['Birthday']) . "</p>";
         echo "<p>Numéro de téléphone: " . htmlspecialchars($profil['PhoneNumb']) . "</p>";
         echo "<p>Ville: " . htmlspecialchars($profil['City']) . "</p>";
         echo "<p>Pays: " . htmlspecialchars($profil['Country']) . "</p>";
         echo "<p>Permis: " . htmlspecialchars($profil['Permis']) . "</p>";
         echo "<p>Description: " . htmlspecialchars($profil['Description']) . "</p>";
-
-
-
 
 
         $stmt = $pdo->prepare("SELECT * FROM experience WHERE UserId = ?");
@@ -71,8 +66,8 @@ try {
 } catch (\PDOException $e) {
     echo "Erreur de base de données: " . $e->getMessage();
 }
+echo "<a href='/cv_pdf?userId=" . htmlspecialchars($userId) . "'>Télécharger le CV en PDF</a>
+<iframe src='/cv_pdf?userId=" . htmlspecialchars($userId) . "'></iframe>";
 ?>
-<a href="generate_pdf.php"<?php echo $userId; ?>">Télécharger le CV en PDF</a>
-<iframe src="/cv_pdf"></iframe>
 </body>
 </html>

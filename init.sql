@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS profil
     UserId      INT AUTO_INCREMENT PRIMARY KEY,
     FirstName   VARCHAR(50) NOT NULL,
     LastName    VARCHAR(50) NOT NULL,
-    Image       VARCHAR(255),
     Birthday    DATE,
     PhoneNumb   VARCHAR(15),
     City        VARCHAR(50),
