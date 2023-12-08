@@ -65,7 +65,8 @@ try {
         ]);
     }
 
-    echo "Profil et détails associés enregistrés avec succès.";
+    header("Location: /");
+    exit();
 
 } catch (\PDOException $e) {
     echo "Erreur de base de données: " . $e->getMessage();

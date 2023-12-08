@@ -72,7 +72,7 @@ try {
         $pdf->Write(0, "\nCompétences\n", '', 0, 'L', true);
         $pdf->SetFont('helvetica', '', 12);
         while ($skill = $stmt->fetch()) {
-            $pdf->Write(0, $skill['SkillName'] . ": " . $skill['SkillDescription'] . "\n");
+            $pdf->Write(0, $skill['SkillName'] . ": " . $skill['ExpDescription'] . "\n");
         }
 
         // Section Certifications
