@@ -20,68 +20,74 @@ $pdf->SetAuthor('CV_Editor');
 $pdf->SetTitle('Your_CV');
 $pdf->SetSubject('Curiculum Vitae');
 $pdf->AddPage();
-$pdf->SetFont('helvetica', '', 12);
+
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 
     if (isset($_GET['userId']) && is_numeric($_GET['userId'])) {
         $userId = $_GET['userId'];
 
+        // Début du CV
+        $pdf->SetFont('helvetica', 'B', 16);
+        $pdf->SetTextColor(0, 0, 255);
+        $pdf->Write(0, "Détails du CV\n", '', 0, 'C', true);
+
         $stmt = $pdo->prepare("SELECT * FROM profil WHERE UserId = ?");
         $stmt->execute([$userId]);
         $profil = $stmt->fetch();
 
-        $profil_pdf_text = "Profil de " . $profil['FirstName'] . " " . $profil['LastName'];
-        $pdf->Write(0, $profil_pdf_text);
+        // Section Profil
+        $pdf->SetFont('helvetica', 'B', 14);
+        $pdf->Write(0, "\nProfil\n", '', 0, 'L', true);
+        $pdf->SetFont('helvetica', '', 12);
+        $pdf->SetTextColor(0, 0, 0);
 
         $imagePath = $profil['Image'];
-        $pdf->Image($imagePath);
+        $pdf->Image($imagePath, '', '', 40);
 
-        $profil_pdf_text = "\nDate de naissance: " . $profil['Birthday'];
-        $pdf->Write(0, $profil_pdf_text);
+        $pdf->Write(0, "Nom: " . $profil['FirstName'] . " " . $profil['LastName'] . "\n");
+        $pdf->Write(0, "Date de naissance: " . $profil['Birthday'] . "\n");
+        $pdf->Write(0, "Numéro de téléphone: " . $profil['PhoneNumb'] . "\n");
+        $pdf->Write(0, "Ville: " . $profil['City'] . "\n");
+        $pdf->Write(0, "Pays: " . $profil['Country'] . "\n");
+        $pdf->Write(0, "Permis: " . $profil['Permis'] . "\n");
+        $pdf->Write(0, "Description: " . $profil['Description'] . "\n");
 
-        $profil_pdf_text = "\nNuméro de téléphone: " . $profil['PhoneNumb'];
-        $pdf->Write(0, $profil_pdf_text);
-
-        $profil_pdf_text = "\nVille: " . $profil['City'];
-        $pdf->Write(0, $profil_pdf_text);
-
-        $profil_pdf_text = "\nPays: " . $profil['Country'];
-        $pdf->Write(0, $profil_pdf_text);
-
-        $profil_pdf_text = "\nPermis: " . $profil['Permis'];
-        $pdf->Write(0, $profil_pdf_text);
-
-        $profil_pdf_text = "\nDescription: " . $profil['Description'];
-        $pdf->Write(0, $profil_pdf_text);
-
-        // Ajouter les expériences professionnelles
+        // Section Expérience Professionnelle
         $stmt = $pdo->prepare("SELECT * FROM experience WHERE UserId = ?");
         $stmt->execute([$userId]);
+        $pdf->SetFont('helvetica', 'B', 14);
+        $pdf->Write(0, "\nExpérience Professionnelle\n", '', 0, 'L', true);
+        $pdf->SetFont('helvetica', '', 12);
         while ($exp = $stmt->fetch()) {
-            $exp_pdf_text = "\nExpérience: " . $exp['ExpName'] . ", Position: " . $exp['JobPosition'] . ", De " . $exp['ExpStart'] . " à " . $exp['ExpEnd'] . ", Localisation: " . $exp['Localisation'] . ", Description: " . $exp['ExpDescription'];
-            $pdf->Write(0, $exp_pdf_text);
+            $pdf->Write(0, $exp['ExpName'] . " - " . $exp['JobPosition'] . " (de " . $exp['ExpStart'] . " à " . $exp['ExpEnd'] . ")\n");
+            $pdf->Write(0, "Localisation: " . $exp['Localisation'] . "\n");
+            $pdf->Write(0, "Description: " . $exp['ExpDescription'] . "\n\n");
         }
 
-        // Ajouter les compétences
+        // Section Compétences
         $stmt = $pdo->prepare("SELECT * FROM skills WHERE UserId = ?");
         $stmt->execute([$userId]);
+        $pdf->SetFont('helvetica', 'B', 14);
+        $pdf->Write(0, "\nCompétences\n", '', 0, 'L', true);
+        $pdf->SetFont('helvetica', '', 12);
         while ($skill = $stmt->fetch()) {
-            $skill_pdf_text = "\nCompétence: " . $skill['SkillName'] . ", Description: " . $skill['SkillDescription']; // Assurez-vous que la colonne s'appelle 'SkillDescription'
-            $pdf->Write(0, $skill_pdf_text);
+            $pdf->Write(0, $skill['SkillName'] . ": " . $skill['SkillDescription'] . "\n");
         }
 
-        // Ajouter les certifications
+        // Section Certifications
         $stmt = $pdo->prepare("SELECT * FROM certification WHERE UserId = ?");
         $stmt->execute([$userId]);
+        $pdf->SetFont('helvetica', 'B', 14);
+        $pdf->Write(0, "\nCertifications\n", '', 0, 'L', true);
+        $pdf->SetFont('helvetica', '', 12);
         while ($cert = $stmt->fetch()) {
-            $cert_pdf_text = "\nCertification: " . $cert['CertName'] . ", Date: " . $cert['CertDate'] . ", Description: " . $cert['CertDescription'];
-            $pdf->Write(0, $cert_pdf_text);
+            $pdf->Write(0, $cert['CertName'] . " - " . $cert['CertDate'] . "\n");
+            $pdf->Write(0, "Description: " . $cert['CertDescription'] . "\n");
         }
     } else {
         echo "<p>Utilisateur non spécifié ou invalide.</p>";
     }
-
 } catch (\PDOException $e) {
     echo "Erreur de base de données: " . $e->getMessage();
 }

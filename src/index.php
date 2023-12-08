@@ -18,5 +18,4 @@ switch ($route) {
         require '404.php';
         break;
 }
-
 ?>
