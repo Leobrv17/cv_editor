@@ -48,6 +48,7 @@ try {
         $pdf->Write(0, "Nom: " . $profil['FirstName'] . " " . $profil['LastName'] . "\n");
         $pdf->Write(0, "Date de naissance: " . $profil['Birthday'] . "\n");
         $pdf->Write(0, "Numéro de téléphone: " . $profil['PhoneNumb'] . "\n");
+        $pdf->Write(0, "Email: " . $profil['Email'] . "\n");
         $pdf->Write(0, "Ville: " . $profil['City'] . "\n");
         $pdf->Write(0, "Pays: " . $profil['Country'] . "\n");
         $pdf->Write(0, "Permis: " . $profil['Permis'] . "\n");

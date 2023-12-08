@@ -125,6 +125,7 @@ $options = [
                     echo "<p>ID: " . htmlspecialchars($profil['UserId']) . "</p>";
                     echo "<p>Date de naissance: " . htmlspecialchars($profil['Birthday']) . "</p>";
                     echo "<p>Numéro de téléphone: " . htmlspecialchars($profil['PhoneNumb']) . "</p>";
+                    echo "<p>Email: " . htmlspecialchars($profil['Email']) . "</p>";
                     echo "<p>Ville: " . htmlspecialchars($profil['City']) . "</p>";
                     echo "<p>Pays: " . htmlspecialchars($profil['Country']) . "</p>";
                     echo "<p>Permis: " . htmlspecialchars($profil['Permis']) . "</p>";
@@ -156,7 +157,6 @@ $options = [
             } catch (\PDOException $e) {
                 echo "Erreur de base de données: " . $e->getMessage();
             }
-            ?>
             ?>
         </div>
     </div>

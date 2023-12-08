@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS profil
     LastName    VARCHAR(50) NOT NULL,
     Birthday    DATE,
     PhoneNumb   VARCHAR(15),
+    Email       VARCHAR(50),
     City        VARCHAR(50),
     Country     VARCHAR(50) NOT NULL,
     Permis      VARCHAR(10),

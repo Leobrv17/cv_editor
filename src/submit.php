@@ -17,12 +17,13 @@ try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 
     // Insertion dans la table profil
-    $stmt = $pdo->prepare("INSERT INTO profil (FirstName, LastName, Birthday, PhoneNumb, City, Country, Permis, Description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO profil (FirstName, LastName, Birthday, PhoneNumb,Email , City, Country, Permis, Description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([
         $_POST['firstName'],
         $_POST['lastName'],
         $_POST['birthday'],
         $_POST['phoneNumb'],
+        $_POST['email'],
         $_POST['city'],
         $_POST['country'],
         $_POST['permis'],
